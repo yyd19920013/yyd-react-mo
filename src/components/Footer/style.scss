@@ -1,0 +1,37 @@
+@import '~css/public.scss';
+
+.Footer{
+    width: 100%;
+    height: .5rem;
+    border-top: .01rem solid $minor;
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    display: -webkit-flex;
+    a{
+        display: flex;
+        display: -webkit-flex;
+        flex: 1;
+        -webkit-flex: 1;
+        flex-direction: column;
+        -webkit-flex-direction: column;
+        justify-content: center;
+        -webkit-justify-content: center;
+        align-items: center;
+        -webkit-align-items: center;
+        color: $minor;
+        &.active{
+            color: $main;
+        }
+        i{
+            font-size: .16rem;
+        }
+        span{
+            line-height: .2rem;
+            font-size: .12rem;
+        }
+    }
+}
