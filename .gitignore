@@ -1,12 +1,15 @@
+.DS_Store
+
 node_modules/
 
 .idea/
 
-.DS_Store
 
-*.log
 yarn.lock
 
 package-lock.json
 
+*.log
+
 *.bak
+
