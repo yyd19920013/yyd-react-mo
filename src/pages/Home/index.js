@@ -30,7 +30,7 @@ export default class Home extends React.Component{
 
     componentDidMount(){
         //重定向到首页
-        this.redirectHome('/boot_page');
+        this.redirectHome('/information/index');
 
         $confirm.show({
             title:'修改密码',
