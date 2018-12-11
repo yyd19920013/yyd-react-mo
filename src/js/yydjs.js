@@ -1698,26 +1698,34 @@ function alertss(arr,endFn,errorFn,msec){
     onOff&&endFn&&endFn();
 };
 
+//判断json是否有某个key，不管是否为空
+function jsonHasKey(json,key){
+    if(Type(json)!='object'){
+        return false;
+    }
+    return key in json;
+};
+
 //判断数组、json、字符串是否所有值都不为空
 function allHaveValue(obj){
     var bool=true;
 
     if(Type(obj)=='array'){
         for(var i=0;i<obj.length;i++){
-            if(!obj[i]||obj[i]==0){
+            if(!obj[i]&&obj[i]!==0){
                 bool=false;
                 break;
             }
         }
     }else if(Type(obj)=='object'){
         for(var attr in obj){
-            if(!obj[attr]||obj[i]==0){
+            if(!obj[attr]&&obj[attr]!==0){
                 bool=false;
                 break;
             }
         }
     }else{
-        if(!obj||obj==0){
+        if(!obj&&obj!==0){
             bool=false;
         }
     }
