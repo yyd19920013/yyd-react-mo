@@ -306,9 +306,11 @@ function toTwo(n){
 };
 
 //算出本月天数
+//getMonth获得的月份是从0开始，要加1
+//下月第0天就是最后一天，-1=倒数第二天，国外月份从0开始,逗号隔开年月日new Date之后月份要大一个月，字符串是正常的
 function manyDay(year,month){
-    month=month+1;
-    var nextMonth=new Date(year,month,0);//根据下个月第0天=上个月的最后一天，-1=倒数第二天
+    var nextMonth=new Date(year,month,0);
+
     return nextMonth.getDate();
 };
 
