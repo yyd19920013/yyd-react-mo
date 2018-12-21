@@ -1,3 +1,14 @@
+@charset"utf-8";
+/* CSS Document */
+
+/*sass定义*/
+/*计算单位函数*/
+@function unit($num){
+    $scale: 1;//缩放比例
+
+    @return #{if($num == 1, 1, $num * $scale)}px;
+}
+
 /*公共变量*/
 $main: #1e59c0;//视觉主色
 $minor: #a8b7c7;//次色
@@ -19,7 +30,6 @@ $padding1: .1rem;//10边距
 $padding2: .2rem;//20边距
 
 /*公共样式*/
-
 //阴影样式1
 @mixin shadow1(){
     box-shadow: 0 .1rem .2rem rgba(0,0,0,0.2);

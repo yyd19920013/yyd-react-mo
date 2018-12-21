@@ -2725,38 +2725,82 @@ function preload(arr,endFn){
     }
 };
 
-//ajax
-//ajax({//示例
-//  url:'',
-//  type:'post',
-//  data:'',
-//  closeToForm:false,
-//  dataType:'json',
-//  headers:{},
-//  xhr:function(xhr){
-//      console.log(xhr);
-//  },
-//  progress:function(ev){
-//      console.log(ev);
-//  },
-//  success:function(data){
-//      console.log(data);
-//  },
-//  error:function(data){
-//      console.log(data);
-//  },
-//});
-function ajax(json){
+//ajax包装
+//支持回调函数和promise两种风格
+/*
+    参数：
+    ajaxWrap({
+        url:'',//请求地址
+        type:'post',//请求方法
+        data:'',//请求传参
+        contentType:'',//设置请求头contentType
+        closeToForm:false,//关闭json转form格式
+        dataType:'json',//返回数据类型
+        headers:{},//请求头设置
+        getXhr:function(xhr){//获取xhr对象的函数
+            console.log(xhr);
+        },
+        progress:function(ev){//上传文件时触发的函数
+            console.log(ev);
+        },
+        success:function(res){//请求状态成功且code成功的回调
+            console.log(res);
+        },
+        finally:function(data){//请求状态成功的回调，promise模式在catch里捕获
+            console.log(data);
+        },
+        error:function(error){//请求状态错误的回调
+            console.log(error);
+        },
+    });
+*/
+/*
+    例子：
+    回调函数风格：
+    ajaxWrap({
+        code:0,
+        url:'https://www.muyouche.com/action2/HomePageInfo.ashx',
+        type:'post',
+        success:function(res){
+            console.log(res);
+        },
+    });
+
+    promise风格：
+    ajaxWrap({
+        code:0,
+        url:'https://www.muyouche.com/action2/HomePageInfo.ashx',
+        type:'post',
+    }).then((res)=>{
+        console.log(res);
+    });
+*/
+function ajaxWrap(config){
     var str='';
+    var errorPromise={
+        then:function(){
+            console.error('这是一个无效的then函数，如果要使用promise方式，不要在config对象里配置success、error、finally函数');
+            return this;
+        },
+        catch:function(){
+            console.error('这是一个无效的catch函数，如果要使用promise方式，不要在config对象里配置success、error、finally函数');
+            return this;
+        },
+        finally:function(){
+            console.error('这是一个无效的finally函数，如果要使用promise方式，不要在config对象里配置success、error、finally函数');
+            return this;
+        },
+    };
 
-    json.type=json.type.toLowerCase()||'get';
-    json.dataType=json.dataType.toLowerCase()||'json';
+    config.type=config.type?config.type.toLowerCase():'get';
+    config.dataType=config.dataType?config.dataType.toLowerCase():'json';
+    config.code=config.code||config.code==0?config.code:200;
 
-    if(!json.closeToForm&&json.data&&Type(json.data)=='object'){
-        for(var attr in json.data){
-            str+=attr+'='+json.data[attr]+'&';
+    if(!config.closeToForm&&config.data&&Type(config.data)=='object'){
+        for(var attr in config.data){
+            str+=attr+'='+config.data[attr]+'&';
         }
-        json.data=str.substring(0,str.length-1);
+        config.data=str.substring(0,str.length-1);
     }
 
     var xhr=null;
@@ -2764,43 +2808,42 @@ function ajax(json){
     try{
         xhr=new XMLHttpRequest();
     }catch(e){
-        xhr=new window.ActiveXObject('Microsoft.XMLHTTP');
+        xhr=new ActiveXObject('Microsoft.XMLHTTP');
     }
 
-    if(json.xhr&&Type(json.xhr)=='function'){
-        xhr=json.xhr(xhr);
+    if(config.getXhr&&Type(config.getXhr)=='function'){
+        xhr=config.getXhr(xhr);
     }
 
-    if(xhr.upload&&json.progress&&Type(json.progress)=='function'){
-        bind(xhr.upload,'progress',json.progress);
+    if(xhr.upload&&config.progress&&Type(config.progress)=='function'){
+        bind(xhr.upload,'progress',config.progress);
     }
 
-    if(json.type=='get'&&json.data){
-        json.url+='?'+json.data;
+    if(config.type=='get'&&config.data){
+        config.url+='?'+config.data;
     }
 
-    xhr.open(json.type,json.url,true);
+    xhr.open(config.type,config.url,true);
 
-    if(json.type=='get'){
+    if(config.type=='get'){
         xhr.send();
     }else{
-        if(!json.closeToForm)xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
-        if(json.headers&&Type(json.headers)=='object'){
-            for(var attr in json.headers){
-                xhr.setRequestHeader(attr,json.headers[attr]);
+        if(!config.closeToForm)xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+        if(config.headers&&Type(config.headers)=='object'){
+            for(var attr in config.headers){
+                xhr.setRequestHeader(attr,config.headers[attr]);
             }
         }
-        xhr.send(json.data);
+        xhr.send(config.data);
     }
 
-    json.before&&Type(json.before)=='function'&&json.before(xhr);
-    xhr.onreadystatechange=function(){
+    function onreadystatechangeFn(resolve,reject){
         var data=null;
 
         if(xhr.readyState==4){
             if(xhr.status==200){
                 try{
-                    switch(json.dataType){
+                    switch(config.dataType){
                         case 'text':
                                 data=xhr.responseText;
                             break;
@@ -2823,17 +2866,52 @@ function ajax(json){
                                 data=oScript;
                             break;
                     }
-
                 }catch(e){
                     console.log(e);
                 }
-                json.after&&Type(json.after)=='function'&&json.after(xhr,data);
-                json.success&&Type(json.success)=='function'&&json.success(data);
+
+                config.finally&&config.finally(data);
+                if(data.code==config.code){
+                    if(resolve&&(Type(resolve)=='function')){
+                        return resolve(data);
+                    }else{
+                        config.success&&config.success(data);
+                    }
+                }else{
+                    if(!config.noHint){
+                        if(data.msg){
+                            alerts(data.msg);
+                        }else{
+                            alerts('请求代码错误');
+                        }
+                    }
+
+                    if(reject&&(Type(reject)=='function')){
+                        return reject(data);
+                    }
+                }
             }else{
-                json.error&&Type(json.error)=='function'&&json.error(xhr.status);
+                alerts('网络异常'+xhr.status);
+                if(reject&&(Type(reject)=='function')){
+                    return reject(xhr.status);
+                }else{
+                    config.error&&config.error(xhr.status);
+                }
             }
         }
     };
+
+    if(config.success||config.finally||config.error){
+        xhr.onreadystatechange=onreadystatechangeFn;
+
+        return errorPromise;
+    }else{
+        return new Promise(function(resolve,reject){
+            xhr.onreadystatechange=function(){
+                onreadystatechangeFn(resolve,reject);
+            };
+        });
+    }
 };
 
 //传入日期和当前日期的差
@@ -3052,7 +3130,7 @@ export{
         shortDate,
 
         QSA,
-        ajax,
+        ajaxWrap,
         Type,
         yydTimer,
         getStyle,

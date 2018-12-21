@@ -32,22 +32,22 @@ export default class Home extends React.Component{
         //重定向到首页
         this.redirectHome('/information/index');
 
-        $confirm.show({
-            title:'修改密码',
-            content:<h1>我是内容</h1>,
-            confirm:()=>{
-                console.log('确定')
-                $alert.show({
-                    title:'修改密码',
-                    content:'确定修改密码',
-                    confirm:()=>{console.log('修改密码了')},
-                    button:'确定',
-                });
-            },
-            cancel:()=>{console.log('取消')},
-            lButton:'取消',
-            rButton:'确定',
-        });
+        // $confirm.show({
+        //     title:'修改密码',
+        //     content:<h1>我是内容</h1>,
+        //     confirm:()=>{
+        //         console.log('确定')
+        //         $alert.show({
+        //             title:'修改密码',
+        //             content:'确定修改密码',
+        //             confirm:()=>{console.log('修改密码了')},
+        //             button:'确定',
+        //         });
+        //     },
+        //     cancel:()=>{console.log('取消')},
+        //     lButton:'取消',
+        //     rButton:'确定',
+        // });
     }
 
     componentDidUpdate(){

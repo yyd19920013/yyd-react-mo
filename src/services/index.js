@@ -1,4 +1,4 @@
-import {ajax,alerts,Type,sStore,lStore,customEvent,strToJson} from 'js/yydjs';
+import {ajaxWrap,alerts,Type,sStore,lStore,customEvent,strToJson} from 'js/yydjs';
 import store from 'store';
 import md5 from 'md5';
 import {browser} from 'src';
@@ -7,7 +7,7 @@ import * as actions from 'store/actions';
 let URL='/app/http';
 
 //对项目返回参数的处理，对ajax的再次封装
-const ajaxWrap=function(json){
+const ajaxWrapFn=function(json){
     let oldPathname=browser.location.pathname;
     let noLoginArr=[
                     {
@@ -54,14 +54,15 @@ const ajaxWrap=function(json){
     }
     sign=md5(sign+'0123456789');
 
-    ajax({
+    ajaxWrap({
+        code:'0000',
         url:json.url,
         type:json.type,
         data:json.data,
         closeToForm:json.closeToForm,
         dataType:json.dataType,
         headers:json.headers||{sign,token},
-        xhr:json.xhr,
+        getXhr:json.getXhr,
         progress:json.progress,
         before:function(xhr){
             //loading显示处理
@@ -126,7 +127,7 @@ const ajaxWrap=function(json){
 };
 
 const demoApi=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/pay/listWallet',
         type:'post',
         data:json,
@@ -139,7 +140,7 @@ const demoApi=function(json,endFn){
 
 
 const uploadOSS=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/uploadOSS',
         type:'post',
         data:json,
@@ -165,7 +166,7 @@ const uploadImage=function(ev,endFn,index){
 }
 
 const bankList=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/bank/list',
         type:'post',
         data:'',
@@ -177,7 +178,7 @@ const bankList=function(endFn){
 };
 
 const userInfo=function(endFn,finallyFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/user/info',
         type:'post',
         data:'',
@@ -193,7 +194,7 @@ const userInfo=function(endFn,finallyFn){
 };
 
 const logout=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/user/logout',
         type:'post',
         data:'',
@@ -205,7 +206,7 @@ const logout=function(endFn){
 };
 
 const bindBank=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/user/bindBank',
         type:'post',
         data:json,
@@ -217,7 +218,7 @@ const bindBank=function(json,endFn){
 };
 
 const unbindBank=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/user/unbindBank',
         type:'post',
         data:json,
@@ -229,7 +230,7 @@ const unbindBank=function(json,endFn){
 };
 
 const realAuth=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/user/realAuth',
         type:'post',
         data:json,
@@ -241,7 +242,7 @@ const realAuth=function(json,endFn){
 };
 
 const realVerify=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/user/realVerify',
         type:'post',
         data:json,
@@ -253,7 +254,7 @@ const realVerify=function(json,endFn){
 };
 
 const editPassword=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/user/editPassword',
         type:'post',
         data:json,
@@ -265,7 +266,7 @@ const editPassword=function(json,endFn){
 };
 
 const fundInfo=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/fund/info',
         type:'post',
         data:'',
@@ -277,7 +278,7 @@ const fundInfo=function(endFn){
 };
 
 const activatePromoter=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/activatePromoter',
         type:'post',
         data:'',
@@ -289,7 +290,7 @@ const activatePromoter=function(endFn){
 };
 
 const findPromoteDayDataForToday=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/findPromoteDayDataForToday',
         type:'post',
         data:'',
@@ -301,7 +302,7 @@ const findPromoteDayDataForToday=function(endFn){
 };
 
 const findPromoteSummaryDataForToday=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/findPromoteSummaryDataForToday',
         type:'post',
         data:'',
@@ -313,7 +314,7 @@ const findPromoteSummaryDataForToday=function(endFn){
 };
 
 const commisionWidthdrawApply=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/commisionWidthdrawApply',
         type:'post',
         data:json,
@@ -325,7 +326,7 @@ const commisionWidthdrawApply=function(json,endFn){
 };
 
 const cancelWidthdrawApply=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/cancelWidthdrawApply',
         type:'post',
         data:json,
@@ -337,7 +338,7 @@ const cancelWidthdrawApply=function(json,endFn){
 };
 
 const listBrancherSummaryData=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/listBrancherSummaryData',
         type:'post',
         data:json,
@@ -349,7 +350,7 @@ const listBrancherSummaryData=function(json,endFn){
 };
 
 const listBrancherSummaryInfo=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/listBrancherSummaryInfo',
         type:'post',
         data:json,
@@ -361,7 +362,7 @@ const listBrancherSummaryInfo=function(json,endFn){
 };
 
 const findBalanceCommisionFlowPage=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/findBalanceCommisionFlowPage',
         type:'post',
         data:json,
@@ -373,7 +374,7 @@ const findBalanceCommisionFlowPage=function(json,endFn){
 };
 
 const queryCommisionIoPage=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/queryCommisionIoPage',
         type:'post',
         data:json,
@@ -385,7 +386,7 @@ const queryCommisionIoPage=function(json,endFn){
 };
 
 const findCommisionFlowPage=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/findCommisionFlowPage',
         type:'post',
         data:json,
@@ -397,7 +398,7 @@ const findCommisionFlowPage=function(json,endFn){
 };
 
 const queryFundFlowPage=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/fund/queryFundFlowPage',
         type:'post',
         data:json,
@@ -409,7 +410,7 @@ const queryFundFlowPage=function(json,endFn){
 };
 
 const findPromoteData=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/findPromoteData',
         type:'post',
         data:'',
@@ -421,7 +422,7 @@ const findPromoteData=function(endFn){
 };
 
 const listBrancherTradeSummaryInfo=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/promote/listBrancherTradeSummaryInfo',
         type:'post',
         data:json,
@@ -434,7 +435,7 @@ const listBrancherTradeSummaryInfo=function(json,endFn){
 
 
 const queryNewsPage=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/notice/queryNewsPage',
         type:'post',
         data:json,
@@ -446,7 +447,7 @@ const queryNewsPage=function(json,endFn){
 };
 
 const queryNoticePage=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/notice/queryNoticePage',
         type:'post',
         data:json,
@@ -458,7 +459,7 @@ const queryNoticePage=function(json,endFn){
 };
 
 const queryNoticeDetail=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/notice/queryNoticeDetail',
         type:'post',
         data:json,
@@ -470,7 +471,7 @@ const queryNoticeDetail=function(json,endFn){
 };
 
 const getYearDate=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/market/getYearDate',
         type:'post',
         data:json,
@@ -482,7 +483,7 @@ const getYearDate=function(json,endFn){
 };
 
 const qryAllNewSection=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/tagAndOthers/qryAllNewSection',
         type:'post',
         data:'',
@@ -494,7 +495,7 @@ const qryAllNewSection=function(endFn){
 };
 
 const qryArticle=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/NewsArticle/qryArticle',
         type:'post',
         data:json,
@@ -506,7 +507,7 @@ const qryArticle=function(json,endFn){
 };
 
 const qryArticleDetail=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/NewsArticle/qryArticleDetail',
         type:'post',
         data:json,
@@ -518,7 +519,7 @@ const qryArticleDetail=function(json,endFn){
 };
 
 const getBannerList=function(endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/tagAndOthers/getBannerList',
         type:'post',
         data:'',
@@ -530,7 +531,7 @@ const getBannerList=function(endFn){
 };
 
 const getBannerDetail=function(json,endFn){
-    ajaxWrap({
+    ajaxWrapFn({
         url:URL+'/crm/tagAndOthers/getBannerDetail',
         type:'post',
         data:json,
