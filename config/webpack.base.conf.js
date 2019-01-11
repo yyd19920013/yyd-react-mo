@@ -28,6 +28,7 @@ var webpackConfig = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+      'root': resolve('./'),
       'src': resolve('src'),
       'components': resolve('src/components'),
       'pages': resolve('src/pages'),
