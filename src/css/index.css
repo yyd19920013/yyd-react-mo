@@ -10,7 +10,7 @@ li{list-style:none;}
 img{border:none;vertical-align:top;}
 em,i{font-style:normal;}
 h1,h2,h3,h4,h5,h6,b,label,th{font-weight:normal;}
-a{text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+a,button{text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 table{border-collapse:collapse;}
 input,textarea,select,button{outline:none;font-family:arial,helvetica,sans-serif;cursor:pointer;background-color:transparent;color: #4a4a4a;border:0;}
 textarea{resize:none;overflow:auto;}
