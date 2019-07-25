@@ -1,34 +1,34 @@
 @import '~css/public.scss';
 
 .form-input>.left-icon{
-  padding-left:0.6rem;
+  padding-left:60px;
 }
 .form-input {
   position:relative;
   input {
     width:100%;
-    height:0.5rem;
-    padding-left:0.1rem;
+    height:50px;
+    padding-left:10px;
     border:0!important;
-    border-bottom: .01rem solid $minor!important;
+    border-bottom: 1px solid $minor!important;
     box-sizing:border-box;
-    font-size:.14rem;
+    font-size:14px;
   }
   .error-hint {
-    border : .01rem solid $sell!important;
+    border : 1px solid $sell!important;
   }
   .left-icon{
-    padding-left:0.6rem;
+    padding-left:60px;
   }
   .icon-wrap{
     position:absolute;
     top:50%;
     left:0;
     display: block;
-    width:0.52rem;
-    height:0.20rem;
-    border-right:.01rem solid $minor;
-    margin-top:-0.1rem;
+    width:52px;
+    height:20px;
+    border-right:1px solid $minor;
+    margin-top:-10px;
     display:flex;
     justify-content: center;
     align-items : center;
@@ -36,7 +36,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size:.15rem;
+      font-size:15px;
       color:$main;
     }
 
@@ -45,13 +45,13 @@
     position:absolute;
     right:0;
     top:0;
-    height:.5rem;
+    height:50px;
     display:flex;
     align-items: center;
     .iconfont {
       color:$minor;
-      font-size: .16rem;
-      margin-right:.08rem;
+      font-size: 16px;
+      margin-right:8px;
     }
   }
   .icon-B-Copy6 {

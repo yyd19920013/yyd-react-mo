@@ -101,7 +101,6 @@ module.exports = merge(baseWebpackConfig, {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
@@ -114,11 +113,7 @@ module.exports = merge(baseWebpackConfig, {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
-              test: /\.scss$/,
-              loaders: ['style-loader', 'css-loader', 'sass-loader'],
-          },
-          {
-            test: /\.css$/,
+            test: /\.(css|scss|less)$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -144,8 +139,17 @@ module.exports = merge(baseWebpackConfig, {
                       ],
                       flexbox: 'no-2009',
                     }),
+                    require('postcss-pxtorem')({
+                      "rootValue": 100,
+                      "minPixelValue": 2, //如px小于这个值，就不会转换了
+                      "propList": ["*"], // 如需开启pxToRem模式，请在数组中加入"*"
+                      "selectorBlackList": [] //如需把css选择器加入黑名单，请在数组中加入对应的前缀，比如"mint-"
+                    }),
                   ],
                 },
+              },
+              {
+                loader: require.resolve('sass-loader'),
               },
             ],
           },

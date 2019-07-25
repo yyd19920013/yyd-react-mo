@@ -5,11 +5,11 @@
     position: relative;
     .defaultSelect{
         width: 100%;
-        padding: .1rem;
-        padding-right: .5rem;
-        height: .5rem;
-        line-height: .3rem;
-        border: .01rem solid $minor;
+        padding: 10px;
+        padding-right: 50px;
+        height: 50px;
+        line-height: 30px;
+        border: 1px solid $minor;
         position: relative;
         .select{
             color: $minor;
@@ -22,45 +22,45 @@
             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;word-break:break-all;
         }
         &.lIcon{
-            padding-left: .5rem;
+            padding-left: 50px;
         }
         .lIcon{
-            padding-left: .1rem;
-            height: .5rem;
-            line-height: .5rem;
+            padding-left: 10px;
+            height: 50px;
+            line-height: 50px;
             position: absolute;
             left: 0;
             top: 0;
-            font-size: .16rem;
+            font-size: 16px;
             color: $main;
         }
         .rIcon{
-            padding-right: .1rem;
-            height: .5rem;
-            line-height: .5rem;
+            padding-right: 10px;
+            height: 50px;
+            line-height: 50px;
             position: absolute;
             right: 0;
             top: 0;
-            font-size: .12rem;
+            font-size: 12px;
             color: #999;
         }
     }
     .selectList{
         width: 100%;
-        height: 2.5rem;
-        border: .01rem solid $minor;
+        height: 250px;
+        border: 1px solid $minor;
         border-top: none;
         background-color: #fff;
         overflow-y: scroll;
         position: absolute;
         left: 0;
-        top: .5rem;
+        top: 50px;
         z-index: 1000;
         display: none;
         li{
             width: 100%;
-            padding: .1rem;
-            line-height: .3rem;
+            padding: 10px;
+            line-height: 30px;
             background-color: #fff;
             &.active{
                 background-color: #dfe5ea;

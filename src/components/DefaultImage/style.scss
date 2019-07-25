@@ -2,13 +2,13 @@
 
 .DefaultImage{
     width: 100%;
-    border-top: .4rem solid transparent;
-    border-bottom: .4rem solid transparent;
-    padding-top: 2.2rem;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    padding-top: 220px;
     height: 100%;
     text-align: center;
-    background: transparent url('') no-repeat center 1rem;
-    background-size: 1rem;
+    background: transparent url('') no-repeat center 100px;
+    background-size: 100px;
     position: relative;
     left: 0;
     top: 0;
@@ -16,11 +16,11 @@
     display: none;
     &.insert{
         border-top: none;
-        padding-top: 1.6rem;
-        padding-bottom: .8rem;
+        padding-top: 160px;
+        padding-bottom: 80px;
         background-color: #fff;
-        background-position: center .8rem;
-        background-size: .8rem;
+        background-position: center 80px;
+        background-size: 80px;
         position: relative;
     }
     &.active{

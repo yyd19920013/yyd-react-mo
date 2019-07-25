@@ -889,18 +889,38 @@ function goPage(moHref,pcHref){
     window.location.href=navigator.userAgent.match(reg)?moHref:pcHref;
 };
 
-//根据设备宽度来写相对布局,
-//最小1rem=100px(宽度为375px屏幕下),3.75rem=100%;
-//根据375屏幕下换算来布局
-//小于375屏幕根节点字体大小与375屏幕保持一致，注意宽度的溢出
-function htmlFontSize(getFontSize){
-    function change(){
-        var fontSize=document.documentElement.clientWidth/3.75;
+//根据屏幕大小设置根节点字体大小
+//getFontSize（是否返回根节点fontSize大小）
+//basic（基准值）
+//maxScale（最大缩放比例）
+/*
+    最好结合postcss-pxtorem插件自动转换px为rem
 
-        if(fontSize<100)fontSize=100;
-        if(fontSize>208)fontSize=208;
+    安装：
+    npm i postcss-pxtorem -D
+
+    修改根目录 .postcssrc.js 文件：
+    注意：rootValue和basic（基准值）保持一致
+    "postcss-pxtorem": {
+        "rootValue": 100,
+        "minPixelValue": 2, //如px小于这个值，就不会转换了
+        "propList": ["*"], // 如需开启pxToRem模式，请在数组中加入"*"
+        "selectorBlackList": [] //如需把css选择器加入黑名单，请在数组中加入对应的前缀，比如"mint-"
+    }
+*/
+function htmlFontSize(getFontSize,basic,maxScale){
+    var getFontSize=getFontSize||false;
+    var basic=basic||100;
+    var maxScale=maxScale||1.5;
+
+    function change(){
+        var oHtml=document.documentElement;
+        var iWidth=oHtml.clientWidth;
+        var iScale=Math.min(iWidth/375,maxScale);
+        var fontSize=basic*iScale;
+
         if(!getFontSize){
-            document.getElementsByTagName('html')[0].style.fontSize=fontSize+'px';
+            oHtml.style.fontSize=fontSize+'px';
         }else{
             return fontSize;
         }
@@ -914,7 +934,22 @@ function htmlFontSize(getFontSize){
     }
 };
 
+//转换单位为rem
+//需要引入import postcssrc from 'root/.postcssrc';
+function unit(num,basic){
+    var length=0;
 
+    if(postcssrc){
+        length=postcssrc.plugins['postcss-pxtorem'].propList.length;
+    }
+
+    if(num==0)return 0;
+    if(length==0)return num+'px';
+    var basic=basic||100;
+    var value=num/basic;
+
+    return (value<0.01?0.01:value)+'rem';
+};
 
 //查看键值修正版
 function keyCode(){
@@ -3274,6 +3309,7 @@ export{
         unbind,
         getPos,
         htmlFontSize,
+        unit,
         consoleNull,
         routerChange,
         css,

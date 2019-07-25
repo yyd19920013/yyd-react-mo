@@ -2,9 +2,9 @@
 
 .NavHeader{
     width: 100%;
-    padding: 0 .5rem;
-    height: .4rem;
-    line-height: .4rem;
+    padding: 0 50px;
+    height: 40px;
+    line-height: 40px;
     background-color: #fff;
     position: fixed;
     left: 0;
@@ -12,7 +12,7 @@
     z-index: 1000;
     text-align: center;
     .goBack{
-        width: .5rem;
+        width: 50px;
         padding-left: $padding2;
         height: 100%;
         position: absolute;
@@ -22,16 +22,16 @@
         i{
             float: left;
             color: $minorText;
-            font-size: .16rem;
+            font-size: 16px;
         }
     }
     a{
         display: inline-block;
         height: 100%;
-        margin: 0 .15rem;
+        margin: 0 15px;
         color: $mainText;
-        border-bottom: 0.02rem solid transparent;
-        font-size: .16rem;
+        border-bottom: 2px solid transparent;
+        font-size: 16px;
         &.active{
             color: $main;
             border-bottom-color: $main;

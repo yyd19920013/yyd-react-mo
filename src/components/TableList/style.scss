@@ -2,25 +2,25 @@
 
 .TableList{
     width: 100%;
-    padding-top: .02rem;
+    padding-top: 2px;
     background-color: $pageBg;
     .table{
         width: 100%;
         border-collapse: separate;
-        border-spacing: 0 .08rem;
+        border-spacing: 8px;
         tr{
             width: 100%;
-            height: .4rem;
-            line-height: .2rem;
+            height: 40px;
+            line-height: 20px;
             text-align: left;
             background-color: #fff;
             th,td{
-                padding: 0 .1rem;
+                padding: 0 10px;
                 &:first-of-type{
-                    padding-left: .2rem;
+                    padding-left: 20px;
                 }
                 &:last-of-type{
-                    padding-right: .2rem;
+                    padding-right: 20px;
                 }
                 &.red{
                     color: #ff0000;
@@ -34,7 +34,7 @@
                         height: 100%;
                         color: $main;
                         position: absolute;
-                        left: -0.1rem;
+                        left: -10px;
                         top: 0;
                         transform: translate3d(-100%,0,0);
                         -webkit-transform: translate3d(-100%,0,0);
@@ -54,9 +54,9 @@
                 }
             }
             .doubleKey{
-                padding: .05rem 0;
+                padding: 5px 0;
                 h3:nth-of-type(2){
-                    font-size: .12rem;
+                    font-size: 12px;
                     color: $minor;
                 }
             }

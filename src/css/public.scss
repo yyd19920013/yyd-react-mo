@@ -26,21 +26,21 @@ $appBg: #050C16;//嵌入app时的背景颜色
 $appHeader: #252629;//嵌入app时的头部颜色
 $appFont: #d8d8d8;//嵌入app时的字体颜色
 $disabledBtText: rbga(255,255,255,0.5);//不可点击按钮文字颜色
-$padding1: .1rem;//10边距
-$padding2: .2rem;//20边距
+$padding1: 10px;//10边距
+$padding2: 20px;//20边距
 
 /*公共样式*/
 //阴影样式1
 @mixin shadow1(){
-    box-shadow: 0 .1rem .2rem rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 //阴影样式2
 @mixin shadow2(){
-    box-shadow: .05rem .05rem .1rem rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
 }
 
 //阴影样式3
 @mixin shadow3(){
-    box-shadow: 0 .05rem .1rem rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 }

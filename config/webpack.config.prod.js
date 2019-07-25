@@ -124,24 +124,8 @@ module.exports = merge(baseWebpackConfig, {
               compact: true,
             },
           },
-          // The notation here is somewhat confusing.
-          // "postcss" loader applies autoprefixer to our CSS.
-          // "css" loader resolves paths in CSS and adds assets as dependencies.
-          // "style" loader normally turns CSS into JS modules injecting <style>,
-          // but unlike in development configuration, we do something different.
-          // `ExtractTextPlugin` first applies the "postcss" and "css" loaders
-          // (second argument), then grabs the result CSS and puts it into a
-          // separate file in our build process. This way we actually ship
-          // a single CSS file in production instead of JS code injecting <style>
-          // tags. If you use code splitting, however, any async bundles will still
-          // use the "style" loader inside the async code so CSS from them won't be
-          // in the main CSS file.
           {
-              test: /\.scss$/,
-              loaders: ['style-loader', 'css-loader', 'sass-loader'],
-          },
-          {
-            test: /\.css$/,
+            test: /\.(css|scss|less)$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -177,8 +161,17 @@ module.exports = merge(baseWebpackConfig, {
                             ],
                             flexbox: 'no-2009',
                           }),
+                          require('postcss-pxtorem')({
+                            "rootValue": 100,
+                            "minPixelValue": 2, //如px小于这个值，就不会转换了
+                            "propList": ["*"], // 如需开启pxToRem模式，请在数组中加入"*"
+                            "selectorBlackList": [] //如需把css选择器加入黑名单，请在数组中加入对应的前缀，比如"mint-"
+                          }),
                         ],
                       },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
                     },
                   ],
                 },

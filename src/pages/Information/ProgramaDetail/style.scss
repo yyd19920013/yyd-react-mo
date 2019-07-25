@@ -11,17 +11,17 @@
         background-color: #fff;
         .title{
             width: 100%;
-            line-height: .24rem;
+            line-height: 24px;
             text-align: center;
-            font-size: .18rem;
-            margin-bottom: .2rem;
+            font-size: 18px;
+            margin-bottom: 20px;
         }
         .subhead{
-            line-height: .2rem;
+            line-height: 20px;
             color: $minorText;
-            font-size: .12rem;
+            font-size: 12px;
             em{
-                margin: 0 .1rem;
+                margin: 0 10px;
             }
             b{
                 float: right;

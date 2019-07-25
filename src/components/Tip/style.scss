@@ -2,18 +2,18 @@
     display: inline-block;
     position: relative;
     i{
-        padding: 0 .1rem;
-        font-size: .14rem;
+        padding: 0 10px;
+        font-size: 14px;
         color: #999;
     }
     .TipText{
-        width: 2.4rem;
-        padding: .05rem .2rem;
-        line-height: .2rem;
-        border-radius: .05rem;
+        width: 240px;
+        padding: 5px 20px;
+        line-height: 20px;
+        border-radius: 5px;
         background-color: #555;
         color: #fff;
-        font-size: .12rem;
+        font-size: 12px;
         position: absolute;
         top: 0;
         left: 0;
@@ -22,15 +22,15 @@
         transform: -webkit-translate3d(0,-100%,0);
         opacity: 1;
         .triangle{
-            border: .1rem solid transparent;
+            border: 10px solid transparent;
             border-top-color: #555;
             position: absolute;
-            left: .18rem;
-            bottom: -.16rem;
+            left: 18px;
+            bottom: -16px;
         }
     }
     &.active .TipText{
-        top: -.1rem;
+        top: -10px;
         transition: opacity 1s linear 3s;
         opacity: 0;
         z-index: 100;
