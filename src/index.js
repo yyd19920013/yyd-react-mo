@@ -12,7 +12,6 @@ import {htmlFontSize,consoleNull} from 'js/yydjs';
 import 'css/index.css';
 
 /*
-
     createBrowserHistory：支持H5的history Api
     createMemoryHistory：一般React Native会支持这样的history
     createHashHistory：支持旧浏览器的hash history Api
