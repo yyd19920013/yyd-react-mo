@@ -1707,22 +1707,34 @@ function goTop(obj,showPos){
 //提示框插件
 //str（提示的字符串）
 //msec（提示框消失的时间，默认3秒）
-function alerts(str,msec){
+//noMask（是否去除遮罩）
+function alerts(str,msec,noMask){
+    var oMask=document.createElement('div');
     var oWrap=document.createElement('div');
     var msec=msec||3000;
 
-    oWrap.style.cssText='min-width:1.4rem; max-width:100%; padding:0 .2rem; height:.4rem; line-height:.4rem; text-align:center; border-radius:.05rem; box-sizing:border-box; background-image: linear-gradient(to right,rgba(29,82,138,0.9),rgba(30,89,192,0.9)); color:#fff; font-size:.14rem; position:fixed; top:1rem; left:50%; z-index:99999; transform:translate3d(-50%,0,0);-webkit-transform:translate3d(-50%,0,0); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:opacity 3s ease-in 0s;-webkit-transition:opacity 3s ease-in 0s;opacity:1;';
+    oMask.style.cssText='width:100%;height:100%;position:fixed;left:0;top:0;z-index:99999;';
+    oWrap.style.cssText='box-sizing:border-box;min-width:140px;max-width:100%;padding:0 20px;height:50px;line-height:50px;text-align:center;border-radius:5px;background:rgba(0,0,0,0.6);color:#fff;font-size:14px;position:fixed;top:50%;left:50%;z-index:99999;transform:translate3d(-50%,-50%,0);-webkit-transform:translate3d(-50%,0,0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity 3s ease-in 0s;-webkit-transition:opacity 3s ease-in 0s;opacity:1;';
     oWrap.innerHTML=str;
     oWrap.style.transitionDuration=(msec/1000/2)+'s';
 
-    document.body.appendChild(oWrap);
+    if(!noMask){
+        oMask.appendChild(oWrap);
+        document.body.appendChild(oMask);
+    }else{
+        document.body.appendChild(oWrap);
+    }
 
     setTimeout(function(){
         oWrap.style.opacity=0;
     },msec/2);
 
     setTimeout(function(){
-        document.body.removeChild(oWrap);
+        if(!noMask){
+            document.body.removeChild(oMask);
+        }else{
+            document.body.removeChild(oWrap);
+        }
     },msec);
 };
 
@@ -1736,9 +1748,9 @@ function toast(str,bool,msec){
     var oText=document.createElement('div');
     var msec=msec||3000;
 
-    oWrap.style.cssText='box-sizing:border-box; width:2.6rem;padding:.2rem;text-align:center;background-color:#fff;border-radius:.05rem;box-shadow:0 .1rem .2rem rgba(0,0,0,0.2);position:fixed;left:50%;top:50%;z-index:99999;transform:translate3d(-50%,-50%,0);-webkit-transform:translate3d(-50%,-50%,0);transition:opacity 3s ease-in 0s;-webkit-transition:opacity 3s ease-in 0s;opacity:1;';
-    oIcon.style.cssText='box-sizing:border-box; color:'+(bool?'#56a786':'#da596d')+';font-size:.4rem;';
-    oText.style.cssText='box-sizing:border-box; padding-top:.2rem;line-height:.2rem;font-size:.14rem;';
+    oWrap.style.cssText='box-sizing:border-box;width:260px;padding:20px;text-align:center;background-color:#fff;border-radius:5px;box-shadow:0 10px 20px rgba(0,0,0,0.2);position:fixed;left:50%;top:50%;z-index:99999;transform:translate3d(-50%,-50%,0);-webkit-transform:translate3d(-50%,-50%,0);transition:opacity 3s ease-in 0s;-webkit-transition:opacity 3s ease-in 0s;opacity:1;';
+    oIcon.style.cssText='box-sizing:border-box;color:'+(bool?'#56a786':'#da596d')+';font-size:40px;';
+    oText.style.cssText='box-sizing:border-box;padding-top:20px;line-height:20px;';
     oText.innerHTML=str;
 
     oWrap.style.transitionDuration=(msec/1000/2)+'s';
@@ -1759,9 +1771,97 @@ function toast(str,bool,msec){
     },msec);
 };
 
+//所有积累正则
+//reg（验证正则）
+//iReg（输入正则）
+//tReg（替换正则）
+var regJson={
+    int:{
+        name:'整型',
+        reg:/^[0-9]+$/,
+        iReg:/^[0-9]*$/,
+        tReg:/[0-9]+/g,
+    },
+    number:{
+        name:'数字',
+        reg:/^[0-9]+\.?[0-9]*$/,
+        iReg:/^[0-9]*\.?[0-9]*$/,
+        tReg:/[0-9]+\.?[0-9]+/g,
+    },
+    aa:{
+        name:'小写字母',
+        reg:/^[a-z]+$/,
+    },
+    AA:{
+        nmae:'大写字母',
+        reg:/^[A-Z]+$/,
+    },
+    aA:{
+        name:'字母',
+        reg:/^[a-zA-Z]+$/,
+        iReg:/^[a-zA-Z]*$/,
+        tReg:/[a-zA-Z]+/g,
+    },
+    aa1:{
+        name:'小写字母或数字',
+        reg:/^[a-z0-9]+$/,
+    },
+    AA1:{
+        name:'大写字母或数字',
+        reg:/^[A-Z0-9]+$/,
+    },
+    aA1:{
+        name:'字母和数字',
+        reg:/^\w+$/,
+    },
+    zh:{
+        name:'中文',
+        reg:/^[\u2E80-\u9FFF]+$/,
+        iReg:/^[\u2E80-\u9FFF]*$/,
+        tReg:/[\u2E80-\u9FFF]+/g,
+    },
+    zhEn:{
+        name:'中文或英文',
+        reg:/^[\u2E80-\u9FFFa-zA-Z]+$/,
+        iReg:/^[\u2E80-\u9FFFa-zA-Z]*$/,
+        tReg:/[\u2E80-\u9FFFa-zA-Z]+/g,
+    },
+    mobile:{
+        name:'手机号',
+        reg:/^1[3-9]{1}\d{9}$/,
+        iReg:/^[0-9]{0,11}$/,
+    },
+    identity:{
+        name:'身份证号码',
+        reg:/^[1-8]\d{5}[1-9]\d{3}(0[1-9]|1[0-2])(0[1-9]|[1-2]\d|3[0-1])\d{3}[\dxX]$/,
+    },
+    bankCard:{
+        name:'银行卡号',
+        reg:/^[0-9]{8,28}$/,
+    },
+    user:{
+        name:'用户名',
+        reg:/^[\w-]{3,16}$/,
+    },
+    password:{
+        name:'密码',
+        reg:/^[^\u2E80-\u9FFF\s]{6,20}$/,
+        iReg:/^[^\u2E80-\u9FFF\s]{0,20}$/,
+    },
+    email:{
+        name:'邮箱',
+        reg:/^([\w\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
+    },
+    verifyCode:{
+        name:'6位数字验证码',
+        reg:/^[0-9]{6}$/,
+        iReg:/^[0-9]{0,6}$/,
+    },
+};
+
 //提示框带多条件阻止
 //优先级reg>type>if（校验类型只生效一个）
-//arr[{if:'','reg':/^$/,type:'number','value':,'str':''}]
+//arr[{if:'','reg':/^$/,type:'number','value':,'hint':''}]
 //if（提示触发的条件）
 //reg（正则匹配）
 //type（已定义类型正则匹配）
@@ -1773,79 +1873,19 @@ function toast(str,bool,msec){
 function alertss(arr,endFn,errorFn,msec){
     var onOff=true;
     var errorIndex=-1;
-    var regJson={//所有type类型
-        number:{
-            name:'数字',
-            reg:/^[0-9]+$/,
-        },
-        aa:{
-            name:'小写字母',
-            reg:/^[a-z]+$/,
-        },
-        AA:{
-            nmae:'大写字母',
-            reg:/^[A-Z]+$/,
-        },
-        aA:{
-            name:'字母',
-            reg:/^[a-zA-Z]+$/,
-        },
-        aa1:{
-            name:'小写字母或数字',
-            reg:/^[a-z0-9]+$/,
-        },
-        AA1:{
-            name:'大写字母或数字',
-            reg:/^[A-Z0-9]+$/,
-        },
-        aA1:{
-            name:'字母和数字',
-            reg:/^\w+$/,
-        },
-        zh:{
-            name:'中文',
-            reg:/^[\u2E80-\u9FFF]+$/,
-        },
-        zhEn:{
-            name:'中文或英文',
-            reg:/^[\u2E80-\u9FFFa-zA-Z]+$/,
-        },
-        mobile:{
-            name:'手机号',
-            reg:/^1[3-9]{1}\d{9}$/,
-        },
-        identity:{
-            name:'身份证号码',
-            reg:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
-        },
-        bankCard:{
-            name:'银行卡号',
-            reg:/^[0-9]{8,28}$/,
-        },
-        user:{
-            name:'用户名',
-            reg:/^[\w-]{3,16}$/,
-        },
-        password:{
-            name:'密码',
-            reg:/^[a-zA-Z0-9]{6,20}$/,
-        },
-        email:{
-            name:'邮箱',
-            reg:/^([\w\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
-        },
-    };
 
     for(var i=0;i<arr.length;i++){
+        var condition=!jsonHasKey(arr[i],'if')||arr[i].if;
+
         if(arr[i].reg){
-            if(!arr[i].reg.test(arr[i].value)){
+            if(condition&&!arr[i].reg.test(arr[i].value)){
                 alerts(arr[i].hint,msec);
                 onOff=false;
                 errorIndex=i;
                 break;
             }
         }else if(arr[i].type){
-            if(regJson[arr[i].type]&&!regJson[arr[i].type].reg.test(arr[i].value)){
+            if(condition&&regJson[arr[i].type]&&!regJson[arr[i].type].reg.test(arr[i].value)){
                 alerts(arr[i].hint||'请输入有效的'+regJson[arr[i].type].name,msec);
                 onOff=false;
                 errorIndex=i;
