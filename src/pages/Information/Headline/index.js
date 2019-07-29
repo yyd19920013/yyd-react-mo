@@ -1,5 +1,6 @@
 import React from 'react';
 import {autobind} from 'core-decorators';
+import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 import {DatePicker,List} from 'antd-mobile';
 import Container from 'components/Container';
@@ -26,6 +27,14 @@ export default class Headline extends React.Component{
     componentDidMount(){
         //获取轮播图详情
         (function(This){
+            let dataList=[1,2,3].map((item,index)=>({
+                src:require('images/bg404.png'),
+                link:`/autoplay_detail?id=${item.id}`,
+            }));
+
+            This.setState({
+                dataList,
+            });
             getBannerList((res)=>{
                 let dataList=res.data.map((item,index)=>({
                     src:item.bannerImg,
@@ -65,7 +74,10 @@ export default class Headline extends React.Component{
                         height="2rem"
                     />
 
-                    <div className="navWrap">
+                    <div className={classNames({
+                        navWrap:true,
+                        aaa:true,
+                    })}>
                         <div className="nav">
                             <Link to="/article_info?title=风险提示&name=RiskWarning">
                                 风险提示

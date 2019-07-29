@@ -1,5 +1,6 @@
 import React from 'react';
 import {autobind} from 'core-decorators';
+import classNames from 'classnames';
 import './style.scss';
 
 @autobind
